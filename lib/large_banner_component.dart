@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class LargeComponent extends AdMobComponent {
-  LargeComponent({Key? key, AdSize size = AdSize.fullBanner, String? adUnitId}) : super(key: key, size: size, adUnitId: adUnitId);
+  LargeComponent({Key? key, String? adUnitId}) : super(key: key, size: AdSize.largeBanner, adUnitId: adUnitId);
 
   @override
   Widget build(BuildContext context) {

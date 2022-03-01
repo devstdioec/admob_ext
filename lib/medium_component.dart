@@ -5,7 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class MediumComponent extends AdMobComponent {
 
-  MediumComponent({Key? key, AdSize size = AdSize.fullBanner, String? adUnitId}) : super(key: key, size: size, adUnitId: adUnitId);
+  MediumComponent({Key? key, String? adUnitId}) : super(key: key, size: AdSize.mediumRectangle, adUnitId: adUnitId);
 
   @override
   Widget build(BuildContext context) {

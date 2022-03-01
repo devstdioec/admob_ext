@@ -8,7 +8,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class AdmobService extends GetxService {
 
   late final InterstitialAd interstitialAd;
-  AppOpenAd? appOpenAd;
 
   Future<AdmobService> init({String? adUnit}) async {
     try {
@@ -35,15 +34,6 @@ class AdmobService extends GetxService {
       await interstitialAd.show();
     } catch (e) {
       print('InterstitialAd failed to show');
-    }
-  }
-
-  showAppOpenAd() {
-    try {
-      if (appOpenAd == null) return;
-      appOpenAd!.show();
-    } catch (e) {
-      print('AppOpenAd failed to show $e');
     }
   }
 }
