@@ -9,6 +9,7 @@ class LargeComponent extends AdMobComponent {
   @override
   Widget build(BuildContext context) {
     try {
+      banner.load();
       if (kDebugMode) {
         return const SizedBox();
       }
