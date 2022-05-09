@@ -10,15 +10,15 @@ class BannerComponent extends AdMobComponent {
     return FutureBuilder(
       future: banner.load(),
       builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Container(
-            alignment: Alignment.center,
-            child: AdWidget(ad: banner),
-            width: banner.size.width.toDouble(),
-            height: banner.size.height.toDouble(),
-          );
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox();
         }
-        return const SizedBox();
+        return Container(
+          alignment: Alignment.center,
+          child: AdWidget(ad: banner),
+          width: banner.size.width.toDouble(),
+          height: banner.size.height.toDouble(),
+        );
       },
     );
   }

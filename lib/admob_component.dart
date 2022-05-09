@@ -10,7 +10,9 @@ class AdMobComponent extends StatelessWidget {
       adUnitId: adUnitId ?? TestUnitIds.bannerUnit,
       size: size ?? AdSize.fullBanner,
       request: const AdRequest(),
-      listener: const BannerAdListener(),
+      listener: BannerAdListener(
+        onAdFailedToLoad: (ad, loadError) => ad.dispose(),
+      ),
     );
   }
 

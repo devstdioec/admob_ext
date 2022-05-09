@@ -12,7 +12,11 @@ class AdmobService extends GetxService {
   Future<AdmobService> init({String? adUnit}) async {
     try {
       if (Platform.isIOS) {
-        await AppTrackingTransparency.requestTrackingAuthorization();
+        try {
+          await AppTrackingTransparency.requestTrackingAuthorization();
+        } catch (e) {
+          print('AppTrackingTransparency error');
+        }
       }
       await MobileAds.instance.initialize();
       InterstitialAd.load(
