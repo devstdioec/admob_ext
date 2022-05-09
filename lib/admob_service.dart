@@ -10,7 +10,7 @@ class AdmobService extends GetxService {
   late InterstitialAd _interstitialAd;
   late final AppOpenAd _appOpenAd;
 
-  Future<AdmobService> init({String? adUnit}) async {
+  Future<AdmobService> init({String? interstitialUnit, String? openAppUnit}) async {
     try {
       if (Platform.isIOS) {
         try {
@@ -20,6 +20,8 @@ class AdmobService extends GetxService {
         }
       }
       await MobileAds.instance.initialize();
+      initializeInterstitial(adUnit: interstitialUnit);
+      initializeAppOpen(adUnit: openAppUnit);
       return this;
     } catch (e) {
       return this;
