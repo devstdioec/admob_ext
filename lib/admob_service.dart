@@ -1,12 +1,13 @@
 import 'dart:io' show Platform;
+import 'package:admob_ext/admob_lifecycle.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'test_unit_ids.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdmobService extends GetxService {
-
   late InterstitialAd _interstitialAd;
   late final AppOpenAd _appOpenAd;
 
@@ -20,8 +21,9 @@ class AdmobService extends GetxService {
         }
       }
       await MobileAds.instance.initialize();
+      await initializeAppOpen(adUnit: openAppUnit);
+      WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
       initializeInterstitial(adUnit: interstitialUnit);
-      initializeAppOpen(adUnit: openAppUnit);
       return this;
     } catch (e) {
       return this;
