@@ -57,7 +57,7 @@ class AdmobService extends GetxService {
     }
   }
 
-  Future showInterstitial({String? adUnit}) async {
+  Future showInterstitial() async {
     try {
       await _interstitialAd.show();
     } catch (e) {
