@@ -5,3 +5,4 @@ export 'large_banner_component.dart';
 export 'banner_component.dart';
 export 'medium_component.dart';
 export 'test_unit_ids.dart';
+export 'admob_lifecycle.dart';

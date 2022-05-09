@@ -7,7 +7,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdmobService extends GetxService {
 
-  late final InterstitialAd interstitialAd;
+  late InterstitialAd _interstitialAd;
+  late final AppOpenAd _appOpenAd;
 
   Future<AdmobService> init({String? adUnit}) async {
     try {
@@ -19,25 +20,56 @@ class AdmobService extends GetxService {
         }
       }
       await MobileAds.instance.initialize();
-      InterstitialAd.load(
-        adUnitId: adUnit ?? TestUnitIds.interstitialUnit,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          onAdLoaded: (InterstitialAd ad) => interstitialAd = ad,
-          onAdFailedToLoad: (LoadAdError error) => print('InterstitialAd failed to load'),
-        ),
-      );
       return this;
     } catch (e) {
       return this;
     }
   }
 
-  Future show() async {
+  Future initializeInterstitial({String? adUnit}) async {
     try {
-      await interstitialAd.show();
+      InterstitialAd.load(
+        adUnitId: adUnit ?? TestUnitIds.interstitialUnit,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (InterstitialAd ad) => _interstitialAd = ad,
+          onAdFailedToLoad: (LoadAdError error) => print('InterstitialAd failed to load'),
+        ),
+      );
+    } catch (e) {
+      print('InterstitialAd failed to load');
+    }
+  }
+
+  Future initializeAppOpen({String? adUnit}) async {
+    try {
+      AppOpenAd.load(
+        adUnitId: adUnit ?? TestUnitIds.appOpenUnit,
+        orientation: AppOpenAd.orientationPortrait,
+        request: const AdRequest(),
+        adLoadCallback: AppOpenAdLoadCallback(
+          onAdLoaded: (ad) => _appOpenAd = ad,
+          onAdFailedToLoad: (error) => print('AppOpenAd failed to load'),
+        ),
+      );
+    } catch (e) {
+      print('AppOpenAd error');
+    }
+  }
+
+  Future showInterstitial({String? adUnit}) async {
+    try {
+      await _interstitialAd.show();
     } catch (e) {
       print('InterstitialAd failed to show');
+    }
+  }
+
+  Future showAppOpenAd() async {
+    try {
+      await _appOpenAd.show();
+    } catch (e) {
+      print('AppOpenAd failed to show');
     }
   }
 }
