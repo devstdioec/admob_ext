@@ -9,11 +9,13 @@ class AdmobService extends GetxService {
   late InterstitialAd _interstitialAd;
   late final AppOpenAd _appOpenAd;
 
-  Future<AdmobService> init({String? interstitialUnit, String? openAppUnit}) async {
+  Future<AdmobService> init({String? interstitialUnit, String? openAppUnit, bool showAdsOnResume = false}) async {
     try {
       await MobileAds.instance.initialize();
       await initializeAppOpen(adUnit: openAppUnit);
-      WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
+      if (showAdsOnResume) {
+        WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
+      }
       initializeInterstitial(adUnit: interstitialUnit);
       return this;
     } catch (e) {
