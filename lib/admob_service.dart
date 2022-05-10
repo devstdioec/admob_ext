@@ -6,10 +6,11 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdmobService extends GetxService {
-  late InterstitialAd _interstitialAd;
+  late final InterstitialAd _interstitialAd;
+  late final RewardedAd _rewardedAd;
   late final AppOpenAd _appOpenAd;
 
-  Future<AdmobService> init({String? interstitialUnit, String? openAppUnit, bool showAdsOnResume = false}) async {
+  Future<AdmobService> init({String? interstitialUnit, String? rewardedUnit, String? openAppUnit, bool showAdsOnResume = false}) async {
     try {
       await MobileAds.instance.initialize();
       await initializeAppOpen(adUnit: openAppUnit);
@@ -38,6 +39,25 @@ class AdmobService extends GetxService {
     }
   }
 
+  Future initializeRewarded({String? adUnit}) async {
+    try {
+      RewardedAd.load(
+        adUnitId: adUnit ?? TestUnitIds.rewardedUnit,
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            _rewardedAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
+          },
+        ),
+      );
+    } catch (e) {
+      print('RewardedAd failed to load');
+    }
+  }
+
   Future initializeAppOpen({String? adUnit}) async {
     try {
       AppOpenAd.load(
@@ -57,6 +77,14 @@ class AdmobService extends GetxService {
   Future showInterstitial() async {
     try {
       await _interstitialAd.show();
+    } catch (e) {
+      print('InterstitialAd failed to show');
+    }
+  }
+
+  Future showRewarded(Function callback) async {
+    try {
+      await _rewardedAd.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) => callback);
     } catch (e) {
       print('InterstitialAd failed to show');
     }
