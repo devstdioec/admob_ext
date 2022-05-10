@@ -1,6 +1,4 @@
-import 'dart:io' show Platform;
 import 'package:admob_ext/admob_lifecycle.dart';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'test_unit_ids.dart';
