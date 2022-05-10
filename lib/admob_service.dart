@@ -101,10 +101,7 @@ class AdmobService extends GetxService {
 
   Future showRewarded(Function callback) async {
     try {
-      await _rewardedAd.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-        ad.dispose();
-        callback();
-      });
+      await _rewardedAd.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) => callback());
     } catch (e) {
       print('InterstitialAd failed to show');
     }
