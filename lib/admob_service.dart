@@ -9,14 +9,18 @@ class AdmobService extends GetxService {
   late final RewardedAd _rewardedAd;
   late final AppOpenAd _appOpenAd;
 
-  Future<AdmobService> init({String? interstitialUnit, String? rewardedUnit, String? openAppUnit, bool showAdsOnResume = false}) async {
+  Future<AdmobService> init({String? interstitialUnit, String? rewardedUnit, String? openAppUnit}) async {
     try {
       await MobileAds.instance.initialize();
-      await initializeAppOpen(adUnit: openAppUnit);
-      if (showAdsOnResume) {
-        WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
+      if (openAppUnit != null) {
+        await initializeAppOpen(adUnit: openAppUnit);
       }
-      initializeInterstitial(adUnit: interstitialUnit);
+      if (interstitialUnit != null) {
+        initializeInterstitial(adUnit: interstitialUnit);
+      }
+      if (rewardedUnit != null) {
+        initializeRewarded(adUnit: rewardedUnit);
+      }
       return this;
     } catch (e) {
       return this;
@@ -25,7 +29,7 @@ class AdmobService extends GetxService {
 
   Future initializeInterstitial({String? adUnit}) async {
     try {
-      InterstitialAd.load(
+      await InterstitialAd.load(
         adUnitId: adUnit ?? TestUnitIds.interstitialUnit,
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
@@ -40,7 +44,7 @@ class AdmobService extends GetxService {
 
   Future initializeRewarded({String? adUnit}) async {
     try {
-      RewardedAd.load(
+      await RewardedAd.load(
         adUnitId: adUnit ?? TestUnitIds.rewardedUnit,
         request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
@@ -59,7 +63,7 @@ class AdmobService extends GetxService {
 
   Future initializeAppOpen({String? adUnit}) async {
     try {
-      AppOpenAd.load(
+      await AppOpenAd.load(
         adUnitId: adUnit ?? TestUnitIds.appOpenUnit,
         orientation: AppOpenAd.orientationPortrait,
         request: const AdRequest(),
@@ -68,6 +72,7 @@ class AdmobService extends GetxService {
           onAdFailedToLoad: (error) => print('AppOpenAd failed to load'),
         ),
       );
+      WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
     } catch (e) {
       print('AppOpenAd error');
     }
