@@ -56,6 +56,19 @@ class AdmobService extends GetxService {
           },
         ),
       );
+      _rewardedAd.fullScreenContentCallback = FullScreenContentCallback(
+        onAdShowedFullScreenContent: (RewardedAd ad) =>
+            print('$ad onAdShowedFullScreenContent.'),
+        onAdDismissedFullScreenContent: (RewardedAd ad) {
+          print('$ad onAdDismissedFullScreenContent.');
+          ad.dispose();
+        },
+        onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+          print('$ad onAdFailedToShowFullScreenContent: $error');
+          ad.dispose();
+        },
+        onAdImpression: (RewardedAd ad) => print('$ad impression occurred.'),
+      );
     } catch (e) {
       print('RewardedAd failed to load');
     }
