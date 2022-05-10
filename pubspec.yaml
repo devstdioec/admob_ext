@@ -8,7 +8,6 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  app_tracking_transparency: ^2.0.2+4
   get: ^4.6.1
   google_mobile_ads: ^1.2.0
   flutter:

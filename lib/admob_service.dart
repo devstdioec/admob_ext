@@ -13,13 +13,6 @@ class AdmobService extends GetxService {
 
   Future<AdmobService> init({String? interstitialUnit, String? openAppUnit}) async {
     try {
-      if (Platform.isIOS) {
-        try {
-          await AppTrackingTransparency.requestTrackingAuthorization();
-        } catch (e) {
-          print('AppTrackingTransparency error');
-        }
-      }
       await MobileAds.instance.initialize();
       await initializeAppOpen(adUnit: openAppUnit);
       WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
