@@ -1,6 +1,5 @@
 import 'package:admob_ext/admob_lifecycle.dart';
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 import 'test_unit_ids.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
