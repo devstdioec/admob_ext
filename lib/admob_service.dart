@@ -85,7 +85,7 @@ class AdmobService extends GetxService {
           onAdFailedToLoad: (error) => print('AppOpenAd failed to load'),
         ),
       );
-      WidgetsBinding.instance!.addObserver(AppLifecycleReactor());
+      WidgetsBinding.instance.addObserver(AppLifecycleReactor());
     } catch (e) {
       print('AppOpenAd error');
     }
@@ -103,6 +103,7 @@ class AdmobService extends GetxService {
     try {
       await _rewardedAd.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) => callback());
     } catch (e) {
+      callback();
       print('InterstitialAd failed to show');
     }
   }
