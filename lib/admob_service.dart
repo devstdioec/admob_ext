@@ -31,7 +31,7 @@ class AdmobService extends GetxService {
     try {
       await InterstitialAd.load(
         adUnitId: adUnit ?? TestUnitIds.interstitialUnit,
-        request: const AdRequest(),
+        request: const AdRequest(httpTimeoutMillis: 5000),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) => _interstitialAd = ad,
           onAdFailedToLoad: (LoadAdError error) => print('InterstitialAd failed to load'),
@@ -46,7 +46,7 @@ class AdmobService extends GetxService {
     try {
       await RewardedAd.load(
         adUnitId: adUnit ?? TestUnitIds.rewardedUnit,
-        request: const AdRequest(),
+        request: const AdRequest(httpTimeoutMillis: 5000),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
             _rewardedAd = ad;
